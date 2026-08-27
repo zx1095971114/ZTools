@@ -19,3 +19,7 @@ test-results
 .pnpm-store/*
 _*
 /.sanshu-memory
+
+/.claude
+CLAUDE.md
+/doc-old
