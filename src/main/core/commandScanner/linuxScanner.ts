@@ -228,7 +228,7 @@ function hasChinese(str: string): boolean {
 // ============================================================
 
 /**
- * 获取 Linux 上所有 .desktop 文件的搜索路径（XDG 规范 + Flatpak 导出）
+ * 获取 Linux 上所有 .desktop 文件的搜索路径（XDG 规范）
  */
 function getLinuxDesktopPaths(): string[] {
   const home = os.homedir()
@@ -237,11 +237,7 @@ function getLinuxDesktopPaths(): string[] {
 
   const paths = [
     path.join(home, '.local/share/applications'), // 用户级
-    ...baseDirs.map((dir) => path.join(dir, 'applications')), // 系统级
-    // Flatpak 导出目录：用户级（~/.local） 与 系统级（/var/lib/flatpak）
-    // 仅当用户安装 Flatpak 后才会存在，因此直接加入即可，不存在时 readdir 会失败并被 try/catch 忽略
-    path.join(home, '.local/share/flatpak/exports/share/applications'),
-    '/var/lib/flatpak/exports/share/applications'
+    ...baseDirs.map((dir) => path.join(dir, 'applications')) // 系统级
   ]
 
   return [...new Set(paths)] // 去重

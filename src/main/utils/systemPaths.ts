@@ -53,8 +53,8 @@ export function getMacApplicationPaths(): string[] {
 }
 
 /**
- * 获取 Linux XDG 应用目录路径（遵循 XDG Base Directory 规范 + Flatpak 导出）
- * 包含用户级和系统级 .desktop 文件目录，以及 Flatpak 的标准导出目录
+ * 获取 Linux XDG 应用目录路径（遵循 XDG Base Directory 规范）
+ * 包含用户级和系统级 .desktop 文件目录
  */
 export function getLinuxApplicationPaths(): string[] {
   const home = os.homedir()
@@ -63,10 +63,7 @@ export function getLinuxApplicationPaths(): string[] {
 
   const paths = [
     path.join(home, '.local/share/applications'), // 用户安装的应用
-    ...baseDirs.map((dir) => path.join(dir, 'applications')), // 系统安装的应用
-    // Flatpak 导出目录：用户级与系统级，目录不存在时由调用方（扫描/监听）忽略
-    path.join(home, '.local/share/flatpak/exports/share/applications'),
-    '/var/lib/flatpak/exports/share/applications'
+    ...baseDirs.map((dir) => path.join(dir, 'applications')) // 系统安装的应用
   ]
 
   return [...new Set(paths)] // 去重
